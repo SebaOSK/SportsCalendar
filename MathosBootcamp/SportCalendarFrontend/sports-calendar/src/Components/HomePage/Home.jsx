@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EventService from "../../Services/EventService";
 import CalendarReact from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "./calendarStyle.css";
 import { differenceInCalendarDays, isSameDay } from "date-fns";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -32,7 +30,7 @@ function useFetchEventData() {
   return { datesToAddClassTo, events };
 }
 
-function Home() {
+function Home({ userInfo }) {
   const { datesToAddClassTo, events } = useFetchEventData();
   const [value, setValue] = useState(new Date());
   const [clickedDateEvents, setClickedDateEvents] = useState([]);
@@ -77,6 +75,13 @@ function Home() {
     navigate(`/Event/:${eventId}`);
   };
 
+  const handleCreateEventClick = () => {
+    navigate(`/EventPost`);
+  };
+
+  const canCreateEvent =
+    userInfo.role === "Super_admin" || userInfo.role === "Organizer";
+
   return (
     <div className="calendar-container">
       <CalendarReact
@@ -101,9 +106,17 @@ function Home() {
                   </Link>
                 </li>
               ))}
+              {canCreateEvent && (
+                <Button onClick={handleCreateEventClick}>Create event</Button>
+              )}
             </ul>
           ) : (
-            <p>No events found for this date.</p>
+            <>
+              <p>No events found for this date.</p>
+              {canCreateEvent && (
+                <Button onClick={handleCreateEventClick}>Create event</Button>
+              )}
+            </>
           )}
         </ModalBody>
         <ModalFooter>

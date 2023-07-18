@@ -1,8 +1,9 @@
 import api from "../http-common";
 
-const getReviews = () => {
-  return api.get("/Review");
+const getReviews = (params) => {
+  return api.get("/Review", {params});
 };
+
 
 const getReview = (id) => {
   return api.get(`/Review/${id}`);

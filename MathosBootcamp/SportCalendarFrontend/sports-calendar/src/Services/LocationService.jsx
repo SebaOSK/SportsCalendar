@@ -1,7 +1,14 @@
 import api from "../http-common";
 
-const getLocations = () => {
-  return api.get("/Location");
+const getLocations = (pageNumber = 1, pageSize = 10, sortOrder = 'ASC', orderBy = 'Venue') => {
+  return api.get("/Location", {
+    params: {
+      pageNumber,
+      pageSize,
+      sortOrder,
+      orderBy
+    }
+  });
 };
 
 const createLocation = (location) => {
@@ -16,11 +23,18 @@ const deleteLocation = (id) => {
   return api.delete(`/Location/${id}`);
 };
 
-const CountyService = {
+const fetchCityById = (id) => {
+  return api.get(`/City/${id}`);
+};
+
+ 
+
+const LocationService = {
     getLocations,
     createLocation,
     updateLocation,
-    deleteLocation
+    deleteLocation,
+    fetchCityById
 };
 
-export default CountyService;
+export default LocationService;

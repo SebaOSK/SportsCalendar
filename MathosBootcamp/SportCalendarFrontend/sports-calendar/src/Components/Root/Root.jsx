@@ -1,22 +1,18 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../MainNavigation/NavBar";
-<<<<<<< HEAD
+import PlacementDisplay from "../Placement/PlacementMain";
 
-
-function RootLayout(){
-  return <>
-     <NavBar/>
-=======
-import { useState } from 'react';
-import useToken from '../Auth/UseToken';
-
-function RootLayout(props){
-  
-  return <>
-     <NavBar setLoggedIn={ props.setLoggedIn } loggedIn={ props.loggedIn }/>
->>>>>>> 55c66f4 (moved const router to App(),)
-     <Outlet />
-        </>;
-};
+function RootLayout(props) {
+  return (
+    <>
+      <NavBar
+        role={props.role}
+        setLoggedIn={props.setLoggedIn}
+        loggedIn={props.loggedIn}
+      />
+      <Outlet />
+    </>
+  );
+}
 
 export default RootLayout;
